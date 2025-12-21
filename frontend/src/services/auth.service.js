@@ -1,55 +1,43 @@
-import api from './api';
+import axios from "axios";
 
-const AuthService = {
-  login: async (email, password) => {
-    try {
-      const response = await api.post('/api/auth/login', { email, password });
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify({
-          id: response.data.id,
-          name: response.data.name,
-          email: response.data.email,
-          role: response.data.role
-        }));
-      }
-      return response.data;
-    } catch (error) {
-      console.error('Login error:', error.response?.data || error.message);
-      throw error;
-    }
-  },
+const API_URL = "http://localhost:8080/api/auth/";
 
-  register: async (name, email, password, role) => {
-    try {
-      console.log("Sending registration request:", { name, email, password, role });
-      const response = await api.post('/api/auth/register', {
-        name,
-        email,
-        password,
-        role
+class AuthService {
+  login(email, password) {
+    return axios
+      .post(API_URL + "login", { email, password })
+      .then((res) => {
+        if (res.data.token) {
+          localStorage.setItem("user", JSON.stringify(res.data));
+        }
+        return res.data;
       });
-      console.log("Registration response:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Registration error:', error.response?.data || error.message);
-      throw error;
-    }
-  },
+  }
 
-  logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  },
+  logout() {
+    localStorage.removeItem("user");
+  }
 
-  getCurrentUser: () => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) return JSON.parse(userStr);
-    return null;
-  },
-};
+  register(name, email, password, role) {
+    return axios.post(API_URL + "register", {
+      name,
+      email,
+      password,
+      role
+    });
+  }
 
-export default AuthService;
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem("user"));
+  }
 
+  getUserRole() {
+    const user = this.getCurrentUser();
+    if (!user || !user.roles) return null;
 
+    // convert ROLE_RECRUITER → recruiter
+    return user.roles[0].replace("ROLE_", "").toLowerCase();
+  }
+}
 
+export default new AuthService();
