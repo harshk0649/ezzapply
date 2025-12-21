@@ -1,0 +1,450 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.job-swipe-container {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  position: relative;
+}
+
+/* Header styles */
+.app-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  background: linear-gradient(90deg, #4285F4, #34A853, #FBBC05, #EA4335);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #4285F4;
+  transition: transform 0.2s;
+}
+
+.profile-pic:hover {
+  transform: scale(1.1);
+}
+
+/* Main content */
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px 100px;
+  flex: 1;
+  margin-top: 20px;
+}
+
+/* Card styles */
+.card-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 70vh;
+  perspective: 1000px;
+  animation: cardEntrance 0.5s ease;
+  margin: 0 auto;
+}
+
+.job-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  background: white;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.job-card.show-details {
+  transform: rotateY(180deg);
+}
+
+.job-card-front, .job-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.job-card-back {
+  transform: rotateY(180deg);
+  overflow-y: auto;
+}
+
+/* Card content */
+.company-logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.company-logo img {
+  width: 60%;
+  height: auto;
+}
+
+.job-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: #333;
+  line-height: 1.2;
+}
+
+.job-meta {
+  margin-bottom: 25px;
+}
+
+.job-meta p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  color: #555;
+  font-size: 16px;
+}
+
+.posted-date {
+  font-size: 14px;
+  color: #888;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.skill-tag {
+  background: #f0f2f5;
+  color: #555;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.skill-tag:hover {
+  background: #e0e4e9;
+  transform: translateY(-2px);
+}
+
+.swipe-hint {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #888;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.details-button {
+  margin-top: auto;
+  background: none;
+  border: none;
+  color: #4285F4;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 12px;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.details-button:hover {
+  color: #2b6bc3;
+  transform: translateY(-2px);
+}
+
+/* Card back content */
+.job-card-back h3 {
+  font-size: 22px;
+  color: #333;
+  margin: 15px 0;
+}
+
+.job-card-back p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Controls */
+.swipe-controls {
+  display: flex;
+  gap: 25px;
+  margin-top: 40px;
+  z-index: 10;
+}
+
+.swipe-button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.swipe-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.swipe-button.reject {
+  background: white;
+  color: #ff4757;
+}
+
+.swipe-button.reject:hover {
+  background: #fff8f8;
+}
+
+.swipe-button.info {
+  background: white;
+  color: #2f80ed;
+}
+
+.swipe-button.info:hover {
+  background: #f8faff;
+}
+
+.swipe-button.apply {
+  background: white;
+  color: #2ed573;
+}
+
+.swipe-button.apply:hover {
+  background: #f8fff9;
+}
+
+.swipe-button.save {
+  background: white;
+  color: #ffc107;
+  transition: all 0.3s ease;
+}
+
+.swipe-button.save:hover {
+  background: #fffbf0;
+}
+
+.swipe-button.save.saved {
+  background: #ffc107;
+  color: white;
+  transform: scale(1.1);
+}
+
+.swipe-status {
+  margin-top: 30px;
+  font-size: 16px;
+  color: #555;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.empty-state h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.empty-state-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.primary-button {
+  background: linear-gradient(90deg, #4285F4, #34A853);
+  color: white;
+  border: none;
+  padding: 16px 30px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 15px rgba(66, 133, 244, 0.2);
+}
+
+.primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px rgba(66, 133, 244, 0.3);
+}
+
+.secondary-button {
+  background: transparent;
+  color: #4285F4;
+  border: 2px solid #4285F4;
+  padding: 15px 30px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.secondary-button:hover {
+  background: rgba(66, 133, 244, 0.05);
+  transform: translateY(-3px);
+}
+
+/* Animations */
+.swipe-left {
+  animation: swipeLeft 0.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.swipe-right {
+  animation: swipeRight 0.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes swipeLeft {
+  to {
+    transform: translateX(-200%) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes swipeRight {
+  to {
+    transform: translateX(200%) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive design */
+@media (min-width: 1200px) {
+  .card-container {
+    max-width: 600px;
+    height: 75vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    height: 65vh;
+    max-width: 90%;
+  }
+  
+  main {
+    padding: 70px 10px 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 12px 5%;
+  }
+  
+  .card-container {
+    height: 60vh;
+    max-width: 95%;
+  }
+  
+  main {
+    padding: 70px 10px 100px;
+  }
+}
+
