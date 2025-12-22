@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
@@ -70,6 +71,15 @@ public class JobController {
                 jobService.toggleJobStatus(id, recruiter)
         );
     }
+
+    @GetMapping("/swipe")
+    @PreAuthorize("hasRole('APPLICANT')")
+    public List<Job> swipeJobs(Authentication auth) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+        User user = userRepository.findById(userDetails.getId()).orElseThrow();
+        return jobService.getSwipeJobs(user);
+    }
+
 
 
 }

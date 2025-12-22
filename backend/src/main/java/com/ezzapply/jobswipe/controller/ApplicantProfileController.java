@@ -3,12 +3,16 @@ package com.ezzapply.jobswipe.controller;
 import com.ezzapply.jobswipe.model.application.ApplicantProfile;
 import com.ezzapply.jobswipe.model.user.User;
 import com.ezzapply.jobswipe.repository.UserRepository;
+import com.ezzapply.jobswipe.security.services.UserDetailsImpl;
 import com.ezzapply.jobswipe.service.ApplicantProfileService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/profile")
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasRole('APPLICANT')")
 public class ApplicantProfileController {
 
     private final ApplicantProfileService profileService;
@@ -22,20 +26,30 @@ public class ApplicantProfileController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/{userId}")
-    public ApplicantProfile getProfile(@PathVariable Long userId) {
-        User user = userRepository.findById(userId)
+    // ✅ GET MY PROFILE
+    @GetMapping("/me")
+    public ApplicantProfile getMyProfile(Authentication authentication) {
+
+        UserDetailsImpl userDetails =
+                (UserDetailsImpl) authentication.getPrincipal();
+
+        User user = userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return profileService.getProfile(user);
     }
 
-    @PutMapping("/{userId}")
-    public ApplicantProfile updateProfile(
-            @PathVariable Long userId,
+    // ✅ UPDATE MY PROFILE
+    @PutMapping("/me")
+    public ApplicantProfile updateMyProfile(
+            Authentication authentication,
             @RequestBody ApplicantProfile updated
     ) {
-        User user = userRepository.findById(userId)
+
+        UserDetailsImpl userDetails =
+                (UserDetailsImpl) authentication.getPrincipal();
+
+        User user = userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         ApplicantProfile profile = profileService.getProfile(user);
@@ -69,11 +83,9 @@ public class ApplicantProfileController {
         profile.setExpectedSalaryMax(updated.getExpectedSalaryMax());
         profile.setRemotePreferred(updated.getRemotePreferred());
 
-        // ===== TEMP PROFILE COMPLETION (we'll automate later) =====
+        // 🔥 profile completion logic (simple)
         profile.setProfileCompletion(70);
 
         return profileService.save(profile);
     }
-
-
 }

@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../auth/useAuth";
+import { login, isRecruiter } from "../../auth/useAuth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  
+
   const submit = async (e) => {
     e.preventDefault();
 
     try {
-      const data = await login(email, password);
+      await login(email, password);
 
-      if (data.roles.includes("ROLE_RECRUITER")) {
-        navigate("/recruiter/jobs/create");
+      // 🔥 ROLE BASED REDIRECT
+      if (isRecruiter()) {
+        navigate("/recruiter");
       } else {
         navigate("/jobs");
       }
@@ -22,6 +23,7 @@ export default function Login() {
       alert(err.response?.data?.message || "Login failed");
     }
   };
+
   return (
     <form onSubmit={submit}>
       <h2>Login</h2>

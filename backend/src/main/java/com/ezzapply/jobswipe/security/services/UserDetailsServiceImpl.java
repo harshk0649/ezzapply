@@ -16,10 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    /**
-     * 🔥 THIS METHOD IS WHAT LOGIN USES
-     * Spring passes "username" → we treat it as EMAIL
-     */
+
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {

@@ -42,11 +42,10 @@ public class AuthController {
     // ================= LOGIN =================
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        System.out.println("login route");
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getEmail(),   // EMAIL IS USERNAME
                         request.getPassword()
                 )
         );
@@ -55,17 +54,19 @@ public class AuthController {
 
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userDetails =
+                (UserDetailsImpl) authentication.getPrincipal();
 
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+        List<String> roles = userDetails.getAuthorities()
+                .stream()
+                .map(r -> r.getAuthority())
                 .toList();
 
         return ResponseEntity.ok(
                 new JwtResponse(
                         jwt,
                         userDetails.getId(),
-                        userDetails.getUsername(),
+                        userDetails.getUsername(), // this is email
                         roles
                 )
         );
@@ -87,6 +88,7 @@ public class AuthController {
                 request.getRole()
         );
 
+        // create profile only for applicants
         if ("applicant".equalsIgnoreCase(request.getRole())) {
             applicantProfileService.createEmptyProfile(user);
         }
