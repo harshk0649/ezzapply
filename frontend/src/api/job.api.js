@@ -11,3 +11,5 @@ export const getMyJobsApi = () => {
 export const toggleJobStatusApi = (jobId) => {
   return api.put(`/jobs/${jobId}/toggle`);
 };
+
+export const getSwipeJobsApi = () => api.get("/jobs/swipe");

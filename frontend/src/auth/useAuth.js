@@ -4,12 +4,15 @@ import { loginApi, registerApi } from "../api/auth.api";
 export const login = async (email, password) => {
   const res = await loginApi(email, password);
 
+  // 🔥 SAVE TOKEN
   localStorage.setItem("token", res.data.token);
+
+  // 🔥 SAVE USER (FIXED)
   localStorage.setItem(
     "user",
     JSON.stringify({
       id: res.data.id,
-      email: res.data.email,
+      email: res.data.username, // ✅ FIX
       roles: res.data.roles,
     })
   );
@@ -37,4 +40,9 @@ export const getUser = () => {
 export const isRecruiter = () => {
   const user = getUser();
   return user?.roles?.includes("ROLE_RECRUITER");
+};
+
+export const isApplicant = () => {
+  const user = getUser();
+  return user?.roles?.includes("ROLE_APPLICANT");
 };

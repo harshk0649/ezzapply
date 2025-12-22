@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { register, login } from "../../auth/useAuth";
+import { register, login, getUser } from "../../auth/useAuth";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -21,8 +21,15 @@ export default function Signup() {
 
     try {
       await register(form.name, form.email, form.password, form.role);
-      await login(form.email, form.password); // auto-login
-      navigate("/jobs");
+      await login(form.email, form.password);
+
+      const user = getUser();
+
+      if (user.roles.includes("ROLE_RECRUITER")) {
+        navigate("/recruiter");
+      } else {
+        navigate("/applicant/profile");
+      }
     } catch (err) {
       alert(err.response?.data?.message || "Signup failed");
     }

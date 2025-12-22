@@ -74,4 +74,8 @@ public List<Job> getJobsByRecruiter(User recruiter) {
         return jobRepository.save(job);
     }
 
+    public List<Job> getSwipeJobs(User user) {
+        return jobRepository.findAll(); // temporary
+    }
+
 }
