@@ -1,8 +1,10 @@
 package com.ezzapply.jobswipe.controller;
 
+import com.ezzapply.jobswipe.model.User;
 import com.ezzapply.jobswipe.payload.request.LoginRequest;
 import com.ezzapply.jobswipe.payload.request.SignupRequest;
 import com.ezzapply.jobswipe.payload.response.MessageResponse;
+import com.ezzapply.jobswipe.service.ApplicantProfileService;
 import com.ezzapply.jobswipe.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,15 +19,19 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final ApplicantProfileService applicantProfileService;
 
     public AuthController(
             AuthenticationManager authenticationManager,
-            UserService userService
+            UserService userService,
+            ApplicantProfileService applicantProfileService
     ) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
+        this.applicantProfileService = applicantProfileService;
     }
 
+    // ===== LOGIN =====
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 
@@ -39,6 +45,7 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("Login successful"));
     }
 
+    // ===== REGISTER =====
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody SignupRequest request) {
 
@@ -47,13 +54,20 @@ public class AuthController {
                     .body(new MessageResponse("Email already exists"));
         }
 
-        userService.createUser(
+        User user = userService.createUser(
                 request.getName(),
                 request.getEmail(),
                 request.getPassword(),
                 request.getRole()
         );
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully"));
+        // ✅ CREATE PROFILE ONLY FOR APPLICANT
+        if ("applicant".equalsIgnoreCase(request.getRole())) {
+            applicantProfileService.createEmptyProfile(user);
+        }
+
+        return ResponseEntity.ok(
+                new MessageResponse("User registered successfully")
+        );
     }
 }
