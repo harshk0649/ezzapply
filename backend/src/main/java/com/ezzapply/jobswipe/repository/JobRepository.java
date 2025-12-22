@@ -1,9 +1,12 @@
 package com.ezzapply.jobswipe.repository;
 
-import com.ezzapply.jobswipe.model.Job;
+import com.ezzapply.jobswipe.model.job.Job;
+import com.ezzapply.jobswipe.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.List;
+
 public interface JobRepository extends JpaRepository<Job, Long> {
+
+    List<Job> findByRecruiter(User recruiter);
 }

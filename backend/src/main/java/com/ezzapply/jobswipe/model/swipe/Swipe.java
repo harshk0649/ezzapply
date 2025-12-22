@@ -1,5 +1,7 @@
-package com.ezzapply.jobswipe.model;
+package com.ezzapply.jobswipe.model.swipe;
 
+import com.ezzapply.jobswipe.model.job.Job;
+import com.ezzapply.jobswipe.model.user.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

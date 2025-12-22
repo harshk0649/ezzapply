@@ -1,6 +1,9 @@
 package com.ezzapply.jobswipe.service;
 
-import com.ezzapply.jobswipe.model.*;
+import com.ezzapply.jobswipe.model.swipe.Swipe;
+import com.ezzapply.jobswipe.model.swipe.SwipeDirection;
+import com.ezzapply.jobswipe.model.user.User;
+import com.ezzapply.jobswipe.model.job.Job;
 import com.ezzapply.jobswipe.repository.JobRepository;
 import com.ezzapply.jobswipe.repository.SwipeRepository;
 import com.ezzapply.jobswipe.repository.UserRepository;

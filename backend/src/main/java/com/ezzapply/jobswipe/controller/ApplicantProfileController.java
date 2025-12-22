@@ -1,7 +1,7 @@
 package com.ezzapply.jobswipe.controller;
 
-import com.ezzapply.jobswipe.model.ApplicantProfile;
-import com.ezzapply.jobswipe.model.User;
+import com.ezzapply.jobswipe.model.application.ApplicantProfile;
+import com.ezzapply.jobswipe.model.user.User;
 import com.ezzapply.jobswipe.repository.UserRepository;
 import com.ezzapply.jobswipe.service.ApplicantProfileService;
 import org.springframework.web.bind.annotation.*;
@@ -40,19 +40,40 @@ public class ApplicantProfileController {
 
         ApplicantProfile profile = profileService.getProfile(user);
 
+        // ===== BASIC INFO =====
         profile.setHeadline(updated.getHeadline());
         profile.setSummary(updated.getSummary());
-        profile.setSkills(updated.getSkills());
-        profile.setEducation(updated.getEducation());
-        profile.setExperience(updated.getExperience());
-        profile.setExperienceYears(updated.getExperienceYears());
         profile.setLocation(updated.getLocation());
         profile.setOpenToWork(updated.getOpenToWork());
 
-        // temporary completion logic
-        profile.setProfileCompletion(60);
+        // ===== SKILLS & EXPERIENCE =====
+        profile.setSkills(updated.getSkills());
+        profile.setCurrentRole(updated.getCurrentRole());
+        profile.setExperienceYears(updated.getExperienceYears());
+        profile.setExperienceDetails(updated.getExperienceDetails());
+
+        // ===== EDUCATION =====
+        profile.setHighestEducation(updated.getHighestEducation());
+        profile.setEducationDetails(updated.getEducationDetails());
+
+        // ===== LINKS =====
+        profile.setResumeUrl(updated.getResumeUrl());
+        profile.setPortfolioUrl(updated.getPortfolioUrl());
+        profile.setLinkedinUrl(updated.getLinkedinUrl());
+        profile.setGithubUrl(updated.getGithubUrl());
+
+        // ===== PREFERENCES =====
+        profile.setPreferredJobType(updated.getPreferredJobType());
+        profile.setPreferredLocation(updated.getPreferredLocation());
+        profile.setExpectedSalaryMin(updated.getExpectedSalaryMin());
+        profile.setExpectedSalaryMax(updated.getExpectedSalaryMax());
+        profile.setRemotePreferred(updated.getRemotePreferred());
+
+        // ===== TEMP PROFILE COMPLETION (we'll automate later) =====
+        profile.setProfileCompletion(70);
 
         return profileService.save(profile);
     }
+
 
 }

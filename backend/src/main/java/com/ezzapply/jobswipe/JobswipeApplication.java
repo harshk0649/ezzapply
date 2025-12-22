@@ -1,7 +1,7 @@
 package com.ezzapply.jobswipe;
 
-import com.ezzapply.jobswipe.model.ERole;
-import com.ezzapply.jobswipe.model.Role;
+import com.ezzapply.jobswipe.model.user.ERole;
+import com.ezzapply.jobswipe.model.user.Role;
 import com.ezzapply.jobswipe.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

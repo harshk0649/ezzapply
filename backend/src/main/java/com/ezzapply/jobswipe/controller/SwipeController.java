@@ -5,7 +5,7 @@ import java.util.Map;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import com.ezzapply.jobswipe.model.SwipeDirection;
+import com.ezzapply.jobswipe.model.swipe.SwipeDirection;
 import com.ezzapply.jobswipe.security.services.UserDetailsImpl;
 import com.ezzapply.jobswipe.service.SwipeService;
 

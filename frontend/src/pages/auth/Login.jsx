@@ -6,18 +6,22 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  
   const submit = async (e) => {
     e.preventDefault();
 
     try {
-      await login(email, password);
-      navigate("/jobs");
+      const data = await login(email, password);
+
+      if (data.roles.includes("ROLE_RECRUITER")) {
+        navigate("/recruiter/jobs/create");
+      } else {
+        navigate("/jobs");
+      }
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
   };
-
   return (
     <form onSubmit={submit}>
       <h2>Login</h2>

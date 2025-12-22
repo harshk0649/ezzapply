@@ -1,7 +1,7 @@
 package com.ezzapply.jobswipe.service;
 
-import com.ezzapply.jobswipe.model.ApplicantProfile;
-import com.ezzapply.jobswipe.model.User;
+import com.ezzapply.jobswipe.model.application.ApplicantProfile;
+import com.ezzapply.jobswipe.model.user.User;
 import com.ezzapply.jobswipe.repository.ApplicantProfileRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +24,9 @@ public class ApplicantProfileService {
 
     public ApplicantProfile getProfile(User user) {
         return profileRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Profile not found"));
+                .orElseGet(() -> createEmptyProfile(user));
     }
+
 
     public ApplicantProfile updateBasicInfo(
             User user,

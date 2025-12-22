@@ -1,4 +1,4 @@
-package com.ezzapply.jobswipe.model;
+package com.ezzapply.jobswipe.model.swipe;
 
 public enum SwipeDirection {
     LEFT,

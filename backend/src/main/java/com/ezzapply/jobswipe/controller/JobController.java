@@ -1,51 +1,75 @@
 package com.ezzapply.jobswipe.controller;
 
-import com.ezzapply.jobswipe.model.Job;
+import com.ezzapply.jobswipe.model.job.Job;
+import com.ezzapply.jobswipe.model.user.User;
+import com.ezzapply.jobswipe.repository.UserRepository;
 import com.ezzapply.jobswipe.service.JobService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ezzapply.jobswipe.security.services.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/jobs")
+@CrossOrigin(origins = "*")
 public class JobController {
-    @Autowired
-    private JobService jobService;
 
-    @GetMapping
-    public ResponseEntity<List<Job>> getAllJobs() {
-        List<Job> jobs = jobService.getAllJobs();
-        return ResponseEntity.ok(jobs);
-    }
+    private final JobService jobService;
+    private final UserRepository userRepository;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Job> getJobById(@PathVariable Long id) {
-        Job job = jobService.getJobById(id);
-        return ResponseEntity.ok(job);
+    public JobController(JobService jobService, UserRepository userRepository) {
+        this.jobService = jobService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('RECRUITER') or hasRole('ADMIN')")
-    public ResponseEntity<Job> createJob(@RequestBody Job job) {
-        Job createdJob = jobService.createJob(job);
-        return ResponseEntity.ok(createdJob);
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ResponseEntity<Job> createJob(
+            @RequestBody Job job,
+            Authentication authentication
+    ) {
+        UserDetailsImpl userDetails =
+                (UserDetailsImpl) authentication.getPrincipal();
+
+        User recruiter = userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        job.setRecruiter(recruiter);
+
+        return ResponseEntity.ok(jobService.createJob(job));
     }
 
-    @PutMapping("/{id}")
-    @PreAuthorize("hasRole('RECRUITER') or hasRole('ADMIN')")
-    public ResponseEntity<Job> updateJob(@PathVariable Long id, @RequestBody Job job) {
-        Job updatedJob = jobService.updateJob(id, job);
-        return ResponseEntity.ok(updatedJob);
+    @GetMapping("/my")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ResponseEntity<?> getMyJobs(Authentication authentication) {
+
+        UserDetailsImpl userDetails =
+                (UserDetailsImpl) authentication.getPrincipal();
+
+        User recruiter = userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return ResponseEntity.ok(
+                jobService.getJobsByRecruiter(recruiter)
+        );
+    }
+    @PutMapping("/{id}/toggle")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ResponseEntity<Job> toggleJobStatus(
+            @PathVariable Long id,
+            Authentication authentication
+    ) {
+        UserDetailsImpl userDetails =
+                (UserDetailsImpl) authentication.getPrincipal();
+
+        User recruiter = userRepository.findById(userDetails.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return ResponseEntity.ok(
+                jobService.toggleJobStatus(id, recruiter)
+        );
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('RECRUITER') or hasRole('ADMIN')")
-    public ResponseEntity<?> deleteJob(@PathVariable Long id) {
-        jobService.deleteJob(id);
-        return ResponseEntity.ok().build();
-    }
+
 }

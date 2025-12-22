@@ -1,6 +1,6 @@
 package com.ezzapply.jobswipe.security.services;
 
-import com.ezzapply.jobswipe.model.User;
+import com.ezzapply.jobswipe.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

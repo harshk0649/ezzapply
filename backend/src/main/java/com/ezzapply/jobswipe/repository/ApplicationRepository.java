@@ -1,8 +1,8 @@
 package com.ezzapply.jobswipe.repository;
 
-import com.ezzapply.jobswipe.model.Application;
-import com.ezzapply.jobswipe.model.Job;
-import com.ezzapply.jobswipe.model.User;
+import com.ezzapply.jobswipe.model.application.Application;
+import com.ezzapply.jobswipe.model.job.Job;
+import com.ezzapply.jobswipe.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

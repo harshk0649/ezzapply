@@ -1,4 +1,4 @@
-package com.ezzapply.jobswipe.model;
+package com.ezzapply.jobswipe.model.user;
 
 public enum ERole {
     ROLE_APPLICANT,

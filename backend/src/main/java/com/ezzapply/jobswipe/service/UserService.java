@@ -1,6 +1,8 @@
 package com.ezzapply.jobswipe.service;
 
-import com.ezzapply.jobswipe.model.*;
+import com.ezzapply.jobswipe.model.user.User;
+import com.ezzapply.jobswipe.model.user.Role;
+import com.ezzapply.jobswipe.model.user.ERole;
 import com.ezzapply.jobswipe.repository.RoleRepository;
 import com.ezzapply.jobswipe.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
