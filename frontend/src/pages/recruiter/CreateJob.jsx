@@ -12,7 +12,7 @@ export default function CreateJob() {
     workMode: "ONSITE",
     experienceYears: "",
     salaryMin: "",
-    salaryMax: ""
+    salaryMax: "",
   });
 
   const handleChange = (e) => {
@@ -38,35 +38,178 @@ export default function CreateJob() {
   };
 
   return (
-    <div>
-      <h2>Create Job</h2>
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
 
-      <form onSubmit={handleSubmit}>
-        <input name="title" placeholder="Job Title" onChange={handleChange} />
-        <textarea name="description" placeholder="Job Description" onChange={handleChange} />
-        <textarea name="requirements" placeholder="Requirements" onChange={handleChange} />
-        <input name="skills" placeholder="Skills (comma separated)" onChange={handleChange} />
-        <input name="location" placeholder="Location" onChange={handleChange} />
+        {/* HEADER */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800">
+            Create a Job Posting
+          </h2>
+          <p className="text-sm text-gray-500 mt-1">
+            Fill in the details below to publish a new job opening
+          </p>
+        </div>
 
-        <select name="jobType" onChange={handleChange}>
-          <option>Full-time</option>
-          <option>Part-time</option>
-          <option>Internship</option>
-          <option>Contract</option>
-        </select>
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-        <select name="workMode" onChange={handleChange}>
-          <option value="ONSITE">Onsite</option>
-          <option value="REMOTE">Remote</option>
-          <option value="HYBRID">Hybrid</option>
-        </select>
+          {/* JOB TITLE */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Job Title
+            </label>
+            <input
+              name="title"
+              placeholder="e.g. Java Backend Developer"
+              onChange={handleChange}
+              className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+              required
+            />
+          </div>
 
-        <input type="number" name="experienceYears" placeholder="Experience (years)" onChange={handleChange} />
-        <input type="number" name="salaryMin" placeholder="Salary Min" onChange={handleChange} />
-        <input type="number" name="salaryMax" placeholder="Salary Max" onChange={handleChange} />
+          {/* DESCRIPTION */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Job Description
+            </label>
+            <textarea
+              name="description"
+              rows="4"
+              placeholder="Describe the role, responsibilities, and expectations"
+              onChange={handleChange}
+              className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+              required
+            />
+          </div>
 
-        <button type="submit">Post Job</button>
-      </form>
+          {/* REQUIREMENTS */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Requirements
+            </label>
+            <textarea
+              name="requirements"
+              rows="3"
+              placeholder="Required qualifications and experience"
+              onChange={handleChange}
+              className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+            />
+          </div>
+
+          {/* GRID: SKILLS + LOCATION */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Skills
+              </label>
+              <input
+                name="skills"
+                placeholder="Java, Spring Boot, MySQL"
+                onChange={handleChange}
+                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Location
+              </label>
+              <input
+                name="location"
+                placeholder="Bangalore, India"
+                onChange={handleChange}
+                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* GRID: JOB TYPE + WORK MODE */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Job Type
+              </label>
+              <select
+                name="jobType"
+                onChange={handleChange}
+                className="mt-1 w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-green-500 focus:outline-none"
+              >
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>Internship</option>
+                <option>Contract</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Work Mode
+              </label>
+              <select
+                name="workMode"
+                onChange={handleChange}
+                className="mt-1 w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-green-500 focus:outline-none"
+              >
+                <option value="ONSITE">Onsite</option>
+                <option value="REMOTE">Remote</option>
+                <option value="HYBRID">Hybrid</option>
+              </select>
+            </div>
+          </div>
+
+          {/* GRID: EXPERIENCE + SALARY */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Experience (Years)
+              </label>
+              <input
+                type="number"
+                name="experienceYears"
+                placeholder="2"
+                onChange={handleChange}
+                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Salary Min
+              </label>
+              <input
+                type="number"
+                name="salaryMin"
+                placeholder="500000"
+                onChange={handleChange}
+                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Salary Max
+              </label>
+              <input
+                type="number"
+                name="salaryMax"
+                placeholder="1200000"
+                onChange={handleChange}
+                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* ACTIONS */}
+          <div className="flex justify-end pt-6">
+            <button
+              type="submit"
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition"
+            >
+              Publish Job
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
