@@ -1,202 +1,197 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Search, Briefcase, Users, Building, Star } from 'lucide-react';
-import '../styles/Home.css';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Search,
+  Briefcase,
+  Users,
+  Building,
+  Star,
+} from "lucide-react";
 
 export default function Home() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   return (
-    <div className="home-container">
-      {/* Header */}
-      <header className="main-header">
-        <div className="header-content">
-          <div className="logo">
-            <h1>EzzApply</h1>
-          </div>
-          <nav className="main-nav">
-            <ul>
-              <li><a href="#features">Features</a></li>
-              <li><a href="#how-it-works">How It Works</a></li>
-              <li><a href="#testimonials">Testimonials</a></li>
-            </ul>
+    <div className="bg-white text-gray-900">
+
+      {/* ================= NAVBAR ================= */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <h1 className="text-xl font-bold text-green-600">EzzApply</h1>
+
+          <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+            <a href="#features" className="hover:text-green-600">Features</a>
+            <a href="#how" className="hover:text-green-600">How it works</a>
+            <a href="#testimonials" className="hover:text-green-600">Testimonials</a>
           </nav>
-          <div className="auth-buttons">
-            <Link to="/login" className="btn btn-outline">Log In</Link>
-            <Link to="/signup" className="btn btn-primary">Sign Up</Link>
+
+          <div className="flex gap-3">
+            <Link to="/login" className="px-4 py-2 text-sm rounded-lg border hover:bg-gray-50">
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="px-4 py-2 text-sm rounded-lg bg-green-600 text-white hover:bg-green-700"
+            >
+              Sign up
+            </Link>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1>Find Your Dream Job With Just a Swipe</h1>
-          <p>EzzApply makes job hunting simple and fun. Swipe right to apply, swipe left to pass.</p>
-          <div className="cta-container">
-            <input 
-              type="email" 
-              placeholder="Enter your email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              className="email-input"
-            />
-            <Link to="/signup" className="btn btn-primary btn-large">
-              Get Started <ArrowRight size={20} />
-            </Link>
-          </div>
-          <div className="stats">
-            <div className="stat-item">
-              <span className="stat-number">10K+</span>
-              <span className="stat-label">Jobs</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">5K+</span>
-              <span className="stat-label">Companies</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">50K+</span>
-              <span className="stat-label">Users</span>
-            </div>
-          </div>
-        </div>
-        <div className="hero-image">
-          <img src="/images/hero-image.png" alt="EzzApply app demonstration" />
-        </div>
-      </section>
+      {/* ================= HERO ================= */}
+      <section className="relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="max-w-7xl mx-auto px-6 py-28 grid md:grid-cols-2 gap-16 items-center"
+        >
+          {/* Text */}
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+              Find your next job <br />
+              <span className="text-green-600">with a swipe</span>
+            </h1>
 
-      {/* Features Section */}
-      <section id="features" className="features-section">
-        <h2>Why Choose EzzApply?</h2>
-        <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-icon"><Search size={32} /></div>
-            <h3>Smart Matching</h3>
-            <p>Our AI matches you with jobs that fit your skills and preferences.</p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon"><Briefcase size={32} /></div>
-            <h3>One-Click Apply</h3>
-            <p>Apply to jobs with a single swipe - no lengthy forms.</p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon"><Users size={32} /></div>
-            <h3>Direct Contact</h3>
-            <p>Connect directly with recruiters when there's mutual interest.</p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon"><Building size={32} /></div>
-            <h3>Top Companies</h3>
-            <p>Access opportunities at thousands of vetted companies.</p>
-          </div>
-        </div>
-      </section>
+            <p className="mt-6 text-gray-600 max-w-md">
+              EzzApply makes job hunting fast, intuitive, and human.
+              Swipe jobs, match with recruiters, and get hired faster.
+            </p>
 
-      {/* How It Works Section */}
-      <section id="how-it-works" className="how-it-works-section">
-        <h2>How It Works</h2>
-        <div className="steps-container">
-          <div className="step">
-            <div className="step-number">1</div>
-            <h3>Create Your Profile</h3>
-            <p>Sign up and build your profile with your skills, experience, and preferences.</p>
-          </div>
-          <div className="step">
-            <div className="step-number">2</div>
-            <h3>Browse Jobs</h3>
-            <p>View personalized job recommendations based on your profile.</p>
-          </div>
-          <div className="step">
-            <div className="step-number">3</div>
-            <h3>Swipe & Match</h3>
-            <p>Swipe right on jobs you like, left on those you don't.</p>
-          </div>
-          <div className="step">
-            <div className="step-number">4</div>
-            <h3>Get Hired</h3>
-            <p>When there's mutual interest, connect with employers and get hired!</p>
-          </div>
-        </div>
-      </section>
+            <div className="mt-8 flex gap-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="px-4 py-2 border rounded-lg w-64 focus:ring-2 focus:ring-green-500"
+              />
+              <Link
+                to="/signup"
+                className="flex items-center gap-2 bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
+              >
+                Get Started <ArrowRight size={18} />
+              </Link>
+            </div>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="testimonials-section">
-        <h2>What Our Users Say</h2>
-        <div className="testimonials-container">
-          <div className="testimonial-card">
-            <div className="testimonial-rating">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={20} fill="#FBBC05" color="#FBBC05" />
+            {/* Stats */}
+            <div className="mt-10 flex gap-10">
+              {[
+                ["10K+", "Jobs"],
+                ["5K+", "Companies"],
+                ["50K+", "Users"],
+              ].map(([num, label]) => (
+                <div key={label}>
+                  <p className="text-2xl font-bold">{num}</p>
+                  <p className="text-sm text-gray-500">{label}</p>
+                </div>
               ))}
             </div>
-            <p>"I found my dream job in just 3 days using EzzApply. The interface is so intuitive!"</p>
-            <div className="testimonial-author">
-              <img src="https://via.placeholder.com/50" alt="User" />
-              <div>
-                <h4>Sarah Johnson</h4>
-                <p>Software Developer</p>
-              </div>
-            </div>
           </div>
-          <div className="testimonial-card">
-            <div className="testimonial-rating">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={20} fill="#FBBC05" color="#FBBC05" />
-              ))}
-            </div>
-            <p>"As a recruiter, EzzApply has revolutionized how we find talent. Highly recommended!"</p>
-            <div className="testimonial-author">
-              <img src="https://via.placeholder.com/50" alt="User" />
-              <div>
-                <h4>Michael Chen</h4>
-                <p>HR Manager</p>
-              </div>
-            </div>
+
+          {/* Abstract motion visual */}
+          <motion.div
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="relative h-80 rounded-3xl bg-gradient-to-br from-green-500/20 via-green-400/10 to-emerald-500/20"
+          />
+        </motion.div>
+      </section>
+
+      {/* ================= FEATURES ================= */}
+      <section id="features" className="bg-gray-50 py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-14">
+            Why choose EzzApply?
+          </h2>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              [Search, "Smart matching", "AI-powered job recommendations"],
+              [Briefcase, "One-click apply", "No long forms, just swipe"],
+              [Users, "Direct contact", "Chat with recruiters directly"],
+              [Building, "Top companies", "Verified employers only"],
+            ].map(([Icon, title, desc]) => (
+              <motion.div
+                key={title}
+                whileHover={{ y: -8 }}
+                className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
+              >
+                <Icon className="text-green-600 mb-4" size={28} />
+                <h3 className="font-semibold mb-2">{title}</h3>
+                <p className="text-sm text-gray-600">{desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="main-footer">
-        <div className="footer-content">
-          <div className="footer-logo">
-            <h2>EzzApply</h2>
-            <p>Making job hunting simple and effective.</p>
-          </div>
-          <div className="footer-links">
-            <div className="footer-column">
-              <h3>Company</h3>
-              <ul>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/careers">Careers</a></li>
-                <li><a href="/contact">Contact</a></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h3>Resources</h3>
-              <ul>
-                <li><a href="/blog">Blog</a></li>
-                <li><a href="/guides">Guides</a></li>
-                <li><a href="/help">Help Center</a></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h3>Legal</h3>
-              <ul>
-                <li><a href="/privacy">Privacy Policy</a></li>
-                <li><a href="/terms">Terms of Service</a></li>
-                <li><a href="/cookies">Cookie Policy</a></li>
-              </ul>
-            </div>
+      {/* ================= HOW IT WORKS ================= */}
+      <section id="how" className="py-24">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold mb-14">How it works</h2>
+
+          <div className="grid md:grid-cols-4 gap-10">
+            {[
+              "Create profile",
+              "Browse jobs",
+              "Swipe to apply",
+              "Get hired",
+            ].map((step, i) => (
+              <div key={step}>
+                <div className="w-10 h-10 mx-auto rounded-full bg-green-600 text-white flex items-center justify-center font-bold">
+                  {i + 1}
+                </div>
+                <p className="mt-4 font-medium">{step}</p>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} EzzApply. All rights reserved.</p>
-          <div className="social-links">
-            <a href="#" aria-label="Facebook"><i className="fab fa-facebook"></i></a>
-            <a href="#" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-            <a href="#" aria-label="LinkedIn"><i className="fab fa-linkedin"></i></a>
-            <a href="#" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
+      </section>
+
+      {/* ================= TESTIMONIALS ================= */}
+      <section id="testimonials" className="bg-gray-50 py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-14">
+            What users say
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              ["Sarah Johnson", "Software Engineer"],
+              ["Michael Chen", "HR Manager"],
+            ].map(([name, role]) => (
+              <div key={name} className="bg-white p-6 rounded-xl shadow">
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-gray-600 mb-4">
+                  “EzzApply completely changed how I apply for jobs. Fast and clean.”
+                </p>
+                <p className="font-semibold">{name}</p>
+                <p className="text-sm text-gray-500">{role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= FOOTER ================= */}
+      <footer className="border-t py-10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6">
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} EzzApply. All rights reserved.
+          </p>
+
+          <div className="flex gap-6 text-sm text-gray-500">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Contact</a>
           </div>
         </div>
       </footer>
