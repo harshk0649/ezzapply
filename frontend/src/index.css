@@ -1,5 +1,16 @@
 @import "tailwindcss";
+:root {
+  --bg-main: #0b0f0e;
+  --green-primary: #22c55e;
+  --green-muted: #16a34a;
+  --text-main: #e5e7eb;
+  --border-subtle: #1f2937;
+}
 
 html, body, #root {
   height: 100%;
+  margin: 0;
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: Inter, system-ui, sans-serif;
 }

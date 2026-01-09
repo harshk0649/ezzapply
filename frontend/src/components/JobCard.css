@@ -1,0 +1,18 @@
+.job-card {
+  width: 320px;
+  padding: 20px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  margin: auto;
+}
+
+.job-card h2 {
+  margin-bottom: 10px;
+}
+
+.job-card p {
+  margin: 6px 0;
+  color: #444;
+}

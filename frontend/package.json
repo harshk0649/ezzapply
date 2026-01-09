@@ -11,16 +11,17 @@
   },
   "dependencies": {
     "@react-spring/web": "^10.0.1",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
+    "@react-three/drei": "^9.88.17",
+    "@react-three/fiber": "^8.15.12",
     "axios": "^1.10.0",
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.24.11",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.522.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.6.2",
     "react-tinder-card": "^1.6.4",
-    "three": "^0.182.0"
+    "three": "^0.150.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
