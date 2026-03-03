@@ -15,7 +15,7 @@ export default function JobSwipe() {
 
   const handleLike = async (jobId) => {
     try {
-      await api.post(`/applications/apply/${jobId}`);
+      await api.post(`/swipe/right/${jobId}`);
       setIndex((prev) => prev + 1);
     } catch (err) {
       console.error(err);
@@ -23,8 +23,14 @@ export default function JobSwipe() {
     }
   };
 
-  const handleDislike = () => {
-    setIndex((prev) => prev + 1);
+  const handleDislike = async (jobId) => {
+    try {
+      await api.post(`/swipe/left/${jobId}`);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIndex((prev) => prev + 1);
+    }
   };
 
   if (!jobs[index]) {
